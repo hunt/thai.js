@@ -36,8 +36,10 @@ var date_token = {
     return thai_date.month.short[date.getMonth()]
   },
   d: function(date){
-    return date.getDate()
+    return date.getDay()
   },
+  D: function(date){ return date.getDate() },
+  DD: function(date){ return pad(date.getDate(),2) },
   L: function(date){
     return thai_date.day.full[date.getDay()]
   },
@@ -45,7 +47,7 @@ var date_token = {
     return thai_date.day.short[date.getDay()]
   },
   full: function(date){
-    return Thai.date(date, 'วันLที่ d F พ.ศ. Y')
+    return Thai.date(date, 'วันLที่ D F พ.ศ. Y')
   },
   // time
   HH: function(date){ return pad(date.getHours(),2) },
@@ -60,7 +62,7 @@ var Thai = {
       format = date;
       date = new Date;
     }
-    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'L', 'l', 'HH', 'H', 'i', 's'];
+    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'D', 'DD', 'L', 'l', 'HH', 'H', 'i', 's'];
     var match = [];
     for (var i=0; i<token.length; i++) {
       if(format.indexOf(token[i]) > -1){

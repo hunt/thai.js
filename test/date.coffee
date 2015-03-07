@@ -13,8 +13,10 @@ describe 'Date Formatting', ->
     should(Thai.date(new Date(mock.hunt), 'full')).be.a.string
     should(Thai.date(new Date(mock.hunt), 'full')).be.eql 'วันอาทิตย์ที่ 7 มิถุนายน พ.ศ. 2530'
 
-  it 'Date (d)', ->
-    should(Thai.date('d')).be.a.number
+  it 'Date (D,DD)', ->
+    should(Thai.date('D')).be.a.number
+    should(Thai.date('DD')).be.a.string
+    should(Thai.date('DD')).have.length 2
 
   it 'Hours (H,HH)', ->
     d = new Date mock.por
@@ -72,6 +74,9 @@ describe 'Date Formatting', ->
         d.setMonth(d.getMonth()+1)
 
   describe 'Day', ->
+    it 'Number (d)', ->
+      should(Thai.date('d')).be.a.number
+
     it 'Long (L)', ->
       d = new Date mock.hunt
       for day in ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์']
