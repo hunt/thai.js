@@ -1,0 +1,30 @@
+{
+  "name": "thai",
+  "version": "1.0.0",
+  "description": "Formating in Thai native style",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hunt/thai.js"
+  },
+  "keywords": [
+    "thai",
+    "formatting",
+    "date",
+    "number"
+  ],
+  "author": "Sira Sujjinanont (hunt)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hunt/thai.js/issues"
+  },
+  "homepage": "https://github.com/hunt/thai.js",
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "mocha": "^2.2.0",
+    "should": "^5.1.0"
+  }
+}
