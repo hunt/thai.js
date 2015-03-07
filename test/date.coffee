@@ -1,5 +1,6 @@
 Thai = require '../'
 should = require 'should'
+process.env.TZ = 'UTC'
 
 describe 'Date Formatting', ->
   mock = 
@@ -8,6 +9,11 @@ describe 'Date Formatting', ->
 
   it 'Default date (now)', ->
     should(Thai.date('full')).be.a.string
+
+  it 'Parse from JSON date', ->
+    should(Thai.date('2015-03-07T18:45:00','full')).be.a.string
+    should(Thai.date('2015-03-07T18:45:00','D F Y H:i น.')).be.eql '7 มีนาคม 2558 18:45 น.'
+    should(Thai.date('2015-03-07T18:45:00+0700','D F Y H:i น.')).be.eql '7 มีนาคม 2558 11:45 น.'
 
   it 'Full (full)', ->
     should(Thai.date(new Date(mock.hunt), 'full')).be.a.string

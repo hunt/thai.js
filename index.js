@@ -62,6 +62,9 @@ var Thai = {
       format = date;
       date = new Date;
     }
+    if(typeof date == 'string'){
+      date = new Date(date);
+    }
     var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'D', 'DD', 'L', 'l', 'HH', 'H', 'i', 's'];
     var match = [];
     for (var i=0; i<token.length; i++) {
