@@ -138,6 +138,8 @@ var Thai = {
 
         if(i==number.length-1 && number[i] == 1 && number.length > 1){
           output[output.length-1] += 'เอ็ด'
+        }else if(i==number.length-1 && number.length > 1  && number[i] != 0){
+            output[output.length-1] += thai_number.text[number[i]]
         }else if(i==number.length-2 && number[i] == 1){
           output.push('สิบ');
         }else if(i==number.length-2 && number[i] == 2){
