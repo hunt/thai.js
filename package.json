@@ -1,6 +1,6 @@
 {
   "name": "thai",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Formating in Thai native style",
   "main": "index.js",
   "scripts": {
