@@ -1,4 +1,6 @@
+--compilers coffee:coffee-script/register
+--require test/lib/setup.js
 --reporter spec
 --slow 1000
 --timeout 5000
---compilers coffee:coffee-script/register
+--check-leaks

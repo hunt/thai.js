@@ -7,7 +7,7 @@ var thai_date = {
     short: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     full: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม']
   }
-};
+}
 
 var thai_number = {
   number: ['๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'],
@@ -16,9 +16,9 @@ var thai_number = {
 }
 
 function pad(n, p, c) {
-    var pad_char = typeof c !== 'undefined' ? c : '0';
-    var pad = new Array(1 + p).join(pad_char);
-    return (pad + n).slice(-pad.length);
+    var pad_char = typeof c !== 'undefined' ? c : '0'
+    var pad = new Array(1 + p).join(pad_char)
+    return (pad + n).slice(-pad.length)
 }
 
 function number_format(number, decimals, dec_point, thousands_sep) {
@@ -31,32 +31,31 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
     s = '',
     toFixedFix = function(n, prec) {
-      var k = Math.pow(10, prec);
-      return '' + (Math.round(n * k) / k)
-        .toFixed(prec);
+      var k = Math.pow(10, prec)
+      return '' + (Math.round(n * k) / k).toFixed(prec)
     };
   // Fix for IE parseFloat(0.55).toFixed(0) = 0;
   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n))
-    .split('.');
+    .split('.')
   if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
   }
   if ((s[1] || '')
     .length < prec) {
-    s[1] = s[1] || '';
+    s[1] = s[1] || ''
     s[1] += new Array(prec - s[1].length + 1)
-      .join('0');
+      .join('0')
   }
-  return s.join(dec);
+  return s.join(dec)
 }
 
 var date_token = {
   // date
   Y: function(date){
-    return date.getFullYear()+543;
+    return date.getFullYear()+543
   },
   y: function(date){
-    return (date.getFullYear()+543).toString().substring(2);
+    return (date.getFullYear()+543).toString().substring(2)
   },
   F: function(date){
     return thai_date.month.full[date.getMonth()]
@@ -88,48 +87,50 @@ var date_token = {
 var Thai = {
   date: function(date, format){
     if(typeof format == 'undefined'){
-      format = date;
-      date = new Date;
+      format = date
+      date = new Date
     }
     if(typeof date == 'string'){
-      date = new Date(date);
+      date = new Date(date)
     }
-    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'DD', 'D', 'L', 'l', 'HH', 'H', 'i', 's'];
-    var match = [];
+    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'DD', 'D', 'L', 'l', 'HH', 'H', 'i', 's']
+    var match = []
     for (var i=0; i<token.length; i++) {
       if(format.indexOf(token[i]) > -1){
-        match.push(token[i]);
+        match.push(token[i])
       }
     }
     for (var i=0; i<match.length; i++) {
-      format = format.replace(match[i], date_token[match[i]](date));
+      format = format.replace(match[i], date_token[match[i]](date))
     }
-    return format;
+    return format
   },
   number: function(number){
-    output = '';
-    if(typeof number == 'number') number = number_format(number);
+    var output = ''
+    if(typeof number == 'number') number = number_format(number)
     for (var i=0; i<number.length; i++) {
       if(thai_number.number[number[i]])
-        output += thai_number.number[number[i]];
+        output += thai_number.number[number[i]]
       else
-        output += number[i];
+        output += number[i]
     }
-    return output;
+    return output
   },
   number_to_text: function(number, glue){
-    var output = [];
-    if(typeof glue == 'undefined') glue = '';
-    if(typeof number == 'number') number = number.toString();
+    var output = []
+    if(typeof glue == 'undefined') glue = ''
+    if(typeof number == 'number') number = number.toString()
     if(number.length>6){
-      m = number.length/6
-      mil = Math.ceil(m);
+      var m = number.length/6
+      var mil = Math.ceil(m)
+      var start = null
       for (var i=mil; i>0; i--){
-        if(number.length%6 != 0){start = number.length % 6}
-        else{start = 6}
-        x = number.substring(0,start)
+        if(number.length%6 != 0)
+          start = number.length % 6
+        else start = 6
+        var x = number.substring(0,start)
         output.push(Thai.number_to_text(x, glue))
-        if(i != 1) output[output.length-1] += 'ล้าน';
+        if(i != 1) output[output.length-1] += 'ล้าน'
         number = number.substring(start)
       }
 
@@ -141,18 +142,18 @@ var Thai = {
         }else if(i==number.length-1 && number.length > 1  && number[i] != 0){
             output[output.length-1] += thai_number.text[number[i]]
         }else if(i==number.length-2 && number[i] == 1){
-          output.push('สิบ');
+          output.push('สิบ')
         }else if(i==number.length-2 && number[i] == 2){
-          output.push('ยี่สิบ');
+          output.push('ยี่สิบ')
         }else if(number[i] == 0){
 
         }else{
-          output.push(thai_number.text[number[i]]+thai_number.position[number.length-i-1]);
+          output.push(thai_number.text[number[i]]+thai_number.position[number.length-i-1])
         }
       }
     }
-    return output.join(glue);
+    return output.join(glue)
   }
-};
+}
 
-module.exports = Thai;
+module.exports = Thai
