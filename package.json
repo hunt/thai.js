@@ -4,7 +4,8 @@
   "description": "Formating in Thai native style",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "TZ=UTC ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha",
+    "test-ci": "TZ=UTC ./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- test/"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,9 @@
   },
   "homepage": "https://github.com/hunt/thai.js",
   "devDependencies": {
+    "chai": "^3.0.0",
     "coffee-script": "^1.9.1",
-    "mocha": "^2.2.0",
-    "should": "^5.1.0"
+    "istanbul": "^0.3.15",
+    "mocha": "^2.2.0"
   }
 }
