@@ -23,6 +23,7 @@ function pad(n, p, c) {
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // borrow from : http://phpjs.org/functions/number_format/
+  /* istanbul ignore next */
   number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
   var n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
@@ -93,7 +94,7 @@ var Thai = {
     if(typeof date == 'string'){
       date = new Date(date);
     }
-    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'D', 'DD', 'L', 'l', 'HH', 'H', 'i', 's'];
+    var token = ['full', 'Y', 'y', 'F', 'f', 'd', 'DD', 'D', 'L', 'l', 'HH', 'H', 'i', 's'];
     var match = [];
     for (var i=0; i<token.length; i++) {
       if(format.indexOf(token[i]) > -1){
@@ -121,22 +122,20 @@ var Thai = {
     if(typeof glue == 'undefined') glue = '';
     if(typeof number == 'number') number = number.toString();
     if(number.length>6){
-      mil = Math.ceil(number.length/6);
-      for (var i=mil; i>0; i--) {
-        var start = (i*6)-(number.length); // -2
-        var end = -6*i;
-        // console.log('>',i,start,start+end)
-        // x = number.substring(start,start+end)
-        // x = number.substring(i*6,number.length-((i+1)*6))
-
-        // console.log(i, x)
-        // output.push(Thai.number_to_text(x, glue))
-        if(i < Math.floor(mil)) output[output.length-1] += 'ล้าน';
+      m = number.length/6
+      mil = Math.ceil(m);
+      for (var i=mil; i>0; i--){
+        if(number.length%6 != 0){start = number.length % 6}
+        else{start = 6}
+        x = number.substring(0,start)
+        output.push(Thai.number_to_text(x, glue))
+        if(i != 1) output[output.length-1] += 'ล้าน';
+        number = number.substring(start)
       }
 
     }else{
       for (var i=0; i<number.length; i++) {
-      // for (var i=number.length-1; i>=0; i--) {
+
         if(i==number.length-1 && number[i] == 1 && number.length > 1){
           output[output.length-1] += 'เอ็ด'
         }else if(i==number.length-2 && number[i] == 1){
@@ -144,40 +143,14 @@ var Thai = {
         }else if(i==number.length-2 && number[i] == 2){
           output.push('ยี่สิบ');
         }else if(number[i] == 0){
-          // output.push(thai_number.text[number[i]]+thai_number.position[number.length-i-1]);
+
         }else{
-          // console.log('a1', number, i, number[i]) 
           output.push(thai_number.text[number[i]]+thai_number.position[number.length-i-1]);
         }
-        // if(thai_number.number[number[i]])
-        //   output += thai_number.number[number[i]];
-        // else
-        //   output += number[i];
       }
     }
     return output.join(glue);
   }
 };
-
-// console.log(Thai.number_to_text(1))
-// console.log(Thai.number_to_text(2))
-// console.log(Thai.number_to_text(10))
-// console.log(Thai.number_to_text(11))
-// console.log(Thai.number_to_text(20))
-// console.log(Thai.number_to_text(21))
-// console.log(Thai.number_to_text(30))
-// console.log(Thai.number_to_text(31))
-// console.log(Thai.number_to_text(1000))
-// console.log(Thai.number_to_text(1100))
-// console.log(Thai.number_to_text(1110))
-// console.log(Thai.number_to_text(1111))
-// console.log(Thai.number_to_text(11111,' '))
-// console.log(Thai.number_to_text(111111,' '))
-// console.log(Thai.number_to_text(1111111,' '))
-// console.log(Thai.number_to_text(2111111,' '))
-// console.log(Thai.number_to_text(11111111,' '))
-// console.log(Thai.number_to_text(22111111,' '))
-// console.log(Thai.number_to_text(12345678,' '))
-// console.log(Thai.number_to_text(99977777,' '))
 
 module.exports = Thai;
